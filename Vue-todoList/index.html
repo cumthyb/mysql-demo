@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" http-equiv="Access-Control-Allow-Origin" content="*">
+    <title>部署测试</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="vue.js"></script>
+</head>
+
+<body>
+    <div class="page-top">
+        <div class="page-content">
+            <h2>任务计划列表</h2>
+        </div>
+    </div>
+    <div class="main">
+        <h3 class="big-title">添加任务：</h3>
+        <input placeholder="例如：跑步               提示：+回车即可添加任务" class="task-input" type="text" v-model="title" v-on:keyup.13="addTodo" />
+        <input placeholder="例如：绕地球光速慢跑1年    提示：+回车即可添加任务" class="task-input" type="text" v-model="remark" v-on:keyup.13="addTodo" />
+        <ul class="task-count" v-show="list.length">
+            <li>{{nocheckLength}}个任务未完成</li>
+            <li class="action">
+                <a href="#all" v-bind:class="{active:visibility === 'all'}">所有任务</a>
+                <a href="#unfinished" v-bind:class="{active:visibility === 'unfinished'}">未完成的任务</a>
+                <a href="#finished" v-bind:class="{active:visibility === 'finished'}">完成的任务</a>
+            </li>
+        </ul>
+        <h3 class="big-title">任务列表：</h3>
+        <div class="tasks">
+
+            <span class="no-task-tip" v-show="!list.length">还没有添加任何任务</span>
+            <ul class="todo-list">
+                <li class="todo" :class="{completed: item.state,editing: item === editorTodos}" v-for="item in filteredList">
+                    <div class="view">
+                        <input class="toggle" type="checkbox" v-model="item.state" />
+                        <label >{{item.title }}</label>
+                        <label @dblclick="editorTodo(item)">{{ item.remark }}</label>
+                        <button class="destroy" @click="deleteTodo(item)"></button>
+                    </div>
+                    <input v-focus="editorTodos === item" class="edit" type="text" v-model="item.remark" @blur="editorTodoed(item)"
+                        @keyup.13="editorTodoed(item)" @keyup.esc="cancelTodo(item)" />
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="http.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
