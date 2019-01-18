@@ -126,9 +126,7 @@ var vm = new Vue({
 			}
 			let url='http://127.0.0.1:3013/api/task/'
 			url+=(todo.state?"unFinish":"finish")
-			this.changTaskState(task,url ,() => {
-				todo.state=!todo.state
-			})
+			this.changTaskState(task,url)
 		},
 		getTasks(filter) {
 			let _this = this
@@ -181,7 +179,7 @@ var vm = new Vue({
 				dataType: "json",   //返回数据的格式，有text/xml/json三种，默认text  
 				success: function (res) {
 					//成功回调函数       
-					cb()
+					cb&&cb()
 					console.log(res)
 				},
 				error: function (err) {
@@ -200,7 +198,7 @@ var vm = new Vue({
 				dataType: "json",   //返回数据的格式，有text/xml/json三种，默认text  
 				success: function (res) {
 					//成功回调函数       
-					cb()
+					cb&&cb()
 					console.log(res)
 				},
 				error: function (err) {
@@ -220,7 +218,7 @@ var vm = new Vue({
 				dataType: "json",   //返回数据的格式，有text/xml/json三种，默认text  
 				success: function (res) {
 					//成功回调函数       
-					cb()
+					cb&&cb()
 					console.log(res)
 				},
 				error: function (err) {
