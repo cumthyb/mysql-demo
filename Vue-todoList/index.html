@@ -33,7 +33,7 @@
             <ul class="todo-list">
                 <li class="todo" :class="{completed: item.state,editing: item === editorTodos}" v-for="item in filteredList">
                     <div class="view">
-                        <input class="toggle" type="checkbox" v-model="item.state" />
+                        <input class="toggle" type="checkbox" @change="toggleState(item)"/>
                         <label >{{item.title }}</label>
                         <label @dblclick="editorTodo(item)">{{ item.remark }}</label>
                         <button class="destroy" @click="deleteTodo(item)"></button>

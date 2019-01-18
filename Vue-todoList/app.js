@@ -77,9 +77,10 @@ var vm = new Vue({
 				title: this.title,
 				remark: this.remark,
 			}
-			this.addTask(todo, () => {
+			this.addTask(todo, (id) => {
 				this.list.unshift({  //事件处理函数中的this指向的是当前这个根实例
 					...todo,
+					id,
 					state: false
 				});
 				this.title = ''; //添加成功后清空输入框
@@ -89,9 +90,10 @@ var vm = new Vue({
 		},
 		//删除任务
 		deleteTodo(todo) {
-			debugger
-			var index = this.list.findIndex(item => item.id === todo.id);
-			this.list.splice(index, 1);
+			this.deleteTask({id:todo.id},()=>{
+				var index = this.list.findIndex(item => item.id === todo.id);
+				this.list.splice(index, 1);
+			})
 		},
 		//编辑任务
 		editorTodo(todo) {
@@ -117,6 +119,17 @@ var vm = new Vue({
 			this.editorTodos = '';
 		},
 
+		toggleState(todo){
+			let task = {
+				where: { id: todo.id },
+				set: { state: !todo.state }
+			}
+			let url='http://127.0.0.1:3013/api/task/'
+			url+=(todo.state?"unFinish":"finish")
+			this.changTaskState(task,url ,() => {
+				todo.state=!todo.state
+			})
+		},
 		getTasks(filter) {
 			let _this = this
 			Ajax.init({
@@ -148,7 +161,7 @@ var vm = new Vue({
 				dataType: "json",   //返回数据的格式，有text/xml/json三种，默认text  
 				success: function (res) {
 					//成功回调函数       
-					cb()
+					cb(res.data)
 					console.log(res)
 				},
 				error: function (err) {
@@ -158,15 +171,13 @@ var vm = new Vue({
 			})
 		},
 		editTask(todo, cb) {
-			/*
-			let _this = this
 			Ajax.init({
 				type: "post",  //请求方式 POST or GET(默认)    
 				url: "http://localhost:3013/api/task/modifyContent",   //请求的地址    
 				async: true,  //是否异步，默认true    
 				timeout: 5000,  //超时处理，默认10000    
 				data: todo,  //发送的数据，json格式    
-				content_type: 'application/json',
+				content_type: 'json',
 				dataType: "json",   //返回数据的格式，有text/xml/json三种，默认text  
 				success: function (res) {
 					//成功回调函数       
@@ -178,24 +189,47 @@ var vm = new Vue({
 					console.log(err)
 				}
 			})
-			*/
-
-			var xhr = window.XMLHttpRequest ? new window.XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-			xhr.open('POST', 'http://localhost:3013/api/task/modifyContent');
-			xhr.onreadystatechange = function () {
-
-				if (xhr.readyState == 4) {
-					if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
-						cb()
-					}
-
-				}
-			};
-			xhr.setRequestHeader('Content-Type', 'application/json');
-			xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-			xhr.send(todo);
-
 		},
+		deleteTask(todo,cb){
+			Ajax.init({
+				type: "get",  //请求方式 POST or GET(默认)    
+				url: "http://localhost:3013/api/task/delete",   //请求的地址    
+				async: true,  //是否异步，默认true    
+				timeout: 5000,  //超时处理，默认10000    
+				data: todo,  //发送的数据，json格式    
+				dataType: "json",   //返回数据的格式，有text/xml/json三种，默认text  
+				success: function (res) {
+					//成功回调函数       
+					cb()
+					console.log(res)
+				},
+				error: function (err) {
+					//失败回调函数       
+					console.log(err)
+				}
+			})
+		},
+		changTaskState(todo,url,cb){
+			Ajax.init({
+				type: "post",  //请求方式 POST or GET(默认)    
+				url: url,   //请求的地址    
+				async: true,  //是否异步，默认true    
+				timeout: 5000,  //超时处理，默认10000   
+				content_type: 'json',
+				data: todo,  //发送的数据，json格式    
+				dataType: "json",   //返回数据的格式，有text/xml/json三种，默认text  
+				success: function (res) {
+					//成功回调函数       
+					cb()
+					console.log(res)
+				},
+				error: function (err) {
+					//失败回调函数       
+					console.log(err)
+				}
+			})
+		}
+
 	},
 	directives: {
 		"focus": {

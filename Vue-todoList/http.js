@@ -7,13 +7,13 @@ window.Ajax = (function (w) {
       async: true,
       timeout: 10000,
       dataType: 'text',
-      content_type:'application/x-www-form-urlencoded',
+      content_type: '',
       success: null,
       error: null
     };
     this.datas = '';
   };
-  
+
   ajax.prototype = {
     init: function (a) {
       var _t = this;
@@ -56,8 +56,15 @@ window.Ajax = (function (w) {
       if (_t.set.type.toLowerCase() == 'get') {
         xhr.send();
       } else {
-        xhr.setRequestHeader("Content-type", _t.set.content_type);
-        xhr.send(_t.set);
+        if (_t.set.content_type.includes('json')) {
+          xhr.setRequestHeader("Content-type", 'application/json')
+          xhr.send(JSON.stringify(_t.set.data) );
+        }
+        else
+        {
+          xhr.setRequestHeader("Content-type", 'application/x-www-form-urlencoded')
+          xhr.send(_t.datas);          
+        }
       };
     },
     extend: function (n, n1) {
