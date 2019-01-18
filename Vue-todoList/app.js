@@ -128,7 +128,7 @@ var vm = new Vue({
 				set: { state: !todo.state }
 			}
 			let url=`${HOST}/api/task/`
-			url+=(todo.state?"unFinish":"finish")
+			url+=(todo.state?"finish":"unFinish")
 			this.changTaskState(task,url)
 		},
 		getTasks(filter) {
