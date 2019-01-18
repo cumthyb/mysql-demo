@@ -2,7 +2,7 @@
  * @Author: hongyongbo
  * @Date: 2019-01-17 10:27:14
  * @LastEditors: hongyongbo
- * @LastEditTime: 2019-01-17 17:42:37
+ * @LastEditTime: 2019-01-18 14:59:18
  * @Description: 实现对持久化数据访问
  * @Notice: 
  */
@@ -34,8 +34,7 @@ class TaskDAL {
    */
   insert(task) {
     return new Promise((reslove, reject) => {
-      let ct = Object.create(task)
-      ct = util.filterNull(ct)
+      let ct = util.filterNull(task)
       ct.id = util.uuid()
       let fields = Object.keys(ct)
       let values = Object.values(ct)
@@ -45,7 +44,7 @@ class TaskDAL {
         if (error)
           reject(error);
         else {
-          reslove()
+          reslove(ct.id)
         }
       })
     })
@@ -64,7 +63,7 @@ class TaskDAL {
       if (fields.length) {
         let values = Object.values(ct)
         let where = fields.join("=? AND ") + "=?"
-        sql = sql + ' WHERE ' + where;
+        sql = sql + ' WHERE ' + where + 'ORDER BY ctime DESC';
         this.conn.query(sql, values, (error, results, fields) => {
           if (error)
             reject(error);
@@ -74,6 +73,7 @@ class TaskDAL {
         })
       }
       else {
+        sql+= ' ORDER BY ctime DESC'
         this.conn.query(sql, (error, results, fields) => {
           if (error)
             reject(error);

@@ -2,7 +2,7 @@
  * @Author: hongyongbo
  * @Date: 2019-01-17 10:27:14
  * @LastEditors: hongyongbo
- * @LastEditTime: 2019-01-17 17:32:19
+ * @LastEditTime: 2019-01-18 15:02:01
  * @Description: Task相关路由
  * @Notice: 
  */
@@ -23,6 +23,7 @@ function taskRouter(dbConn) {
       ctx.body = {
         code: 1,
         message: 'success',
+        data:res
       }
     }).catch(err => {
       console.log(err)
