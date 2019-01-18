@@ -1,5 +1,8 @@
 
 //存取localstorage中的数据
+// const HOST='localhost:3013'
+const HOST='http://www.cumthyb.site:3013'
+
 var store = {
 	save(key, value) {
 		localStorage.setItem(key, JSON.stringify(value));
@@ -124,7 +127,7 @@ var vm = new Vue({
 				where: { id: todo.id },
 				set: { state: !todo.state }
 			}
-			let url='http://127.0.0.1:3013/api/task/'
+			let url=`${HOST}/api/task/`
 			url+=(todo.state?"unFinish":"finish")
 			this.changTaskState(task,url)
 		},
@@ -132,7 +135,7 @@ var vm = new Vue({
 			let _this = this
 			Ajax.init({
 				type: "post",  //请求方式 POST or GET(默认)    
-				url: "http://localhost:3013/api/task/getTask",   //请求的地址    
+				url:`${HOST}/api/task/getTask`,   //请求的地址    
 				async: true,  //是否异步，默认true    
 				timeout: 5000,  //超时处理，默认10000    
 				data: filter,  //发送的数据，json格式    
@@ -152,7 +155,7 @@ var vm = new Vue({
 			let _this = this
 			Ajax.init({
 				type: "post",  //请求方式 POST or GET(默认)    
-				url: "http://localhost:3013/api/task/add",   //请求的地址    
+				url:`${HOST}/api/task/add`,   //请求的地址    
 				async: true,  //是否异步，默认true    
 				timeout: 5000,  //超时处理，默认10000    
 				data: todo,  //发送的数据，json格式    
@@ -171,7 +174,7 @@ var vm = new Vue({
 		editTask(todo, cb) {
 			Ajax.init({
 				type: "post",  //请求方式 POST or GET(默认)    
-				url: "http://localhost:3013/api/task/modifyContent",   //请求的地址    
+				url:`${HOST}/api/task/modifyContent`,   //请求的地址    
 				async: true,  //是否异步，默认true    
 				timeout: 5000,  //超时处理，默认10000    
 				data: todo,  //发送的数据，json格式    
@@ -191,7 +194,7 @@ var vm = new Vue({
 		deleteTask(todo,cb){
 			Ajax.init({
 				type: "get",  //请求方式 POST or GET(默认)    
-				url: "http://localhost:3013/api/task/delete",   //请求的地址    
+				url:`${HOST}/api/task/delete` ,   //请求的地址    
 				async: true,  //是否异步，默认true    
 				timeout: 5000,  //超时处理，默认10000    
 				data: todo,  //发送的数据，json格式    
