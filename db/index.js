@@ -13,6 +13,7 @@ getConnection().then(conn => {
     return
   }
   else {
+
     app.use(cors({
       origin: function (ctx) {
         // if (ctx.url === '/test') {

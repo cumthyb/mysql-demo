@@ -11,7 +11,7 @@
  Target Server Version : 50724
  File Encoding         : 65001
 
- Date: 22/01/2019 11:28:13
+ Date: 22/01/2019 19:17:33
 */
 
 SET NAMES utf8mb4;
@@ -26,7 +26,7 @@ CREATE TABLE `BONUS` (
   `JOB` varchar(9) DEFAULT NULL COMMENT '雇员工作',
   `SAL` decimal(10,0) DEFAULT NULL COMMENT '雇员工资',
   `COMM` decimal(10,0) DEFAULT NULL COMMENT '雇员奖金'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC; -- 共享表空间
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Table structure for DEPT
