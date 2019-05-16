@@ -2,7 +2,7 @@
  * @Author: hongyongbo
  * @Date: 2019-01-17 10:27:14
  * @LastEditors: hongyongbo
- * @LastEditTime: 2019-01-18 15:02:01
+ * @LastEditTime: 2019-05-16 13:49:06
  * @Description: Task相关路由
  * @Notice: 
  */
@@ -126,7 +126,7 @@ function taskRouter(dbConn) {
    * @Description: 
    */
   const getTask = async (ctx, next) => {
-    const params = ctx.request.body;
+    const params = ctx.request.query;
     await Task.selectTask(dbConn, params).then(res => {
       ctx.body = {
         code: 1,

@@ -16,8 +16,8 @@
     </div>
     <div class="main">
         <h3 class="big-title">添加任务：</h3>
-        <input placeholder="例如：跑步               提示：+回车即可添加任务" class="task-input" type="text" v-model="title" v-on:keyup.13="addTodo" />
-        <input placeholder="例如：绕地球光速慢跑1年    提示：+回车即可添加任务" class="task-input" type="text" v-model="remark" v-on:keyup.13="addTodo" />
+        <span>标签</span> <input placeholder="例如：跑步               提示：+回车即可添加任务" class="task-input" type="text" v-model="title" v-on:keyup.13="addTodo" />
+        <span>内容</span> <input placeholder="例如：绕地球光速慢跑1年    提示：+回车即可添加任务" class="task-input" type="text" v-model="remark" v-on:keyup.13="addTodo" />
         <ul class="task-count" v-show="list.length">
             <li>{{nocheckLength}}个任务未完成</li>
             <li class="action">
@@ -27,6 +27,7 @@
             </li>
         </ul>
         <h3 class="big-title">任务列表：</h3>
+        <p>点击内容前面更改状态；双击内容可以修改内容；点击内容右侧❌可删除</p>
         <div class="tasks">
 
             <span class="no-task-tip" v-show="!list.length">还没有添加任何任务</span>

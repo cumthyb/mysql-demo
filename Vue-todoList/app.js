@@ -2,6 +2,7 @@
 //存取localstorage中的数据
 // const HOST='localhost:3013'
 const HOST='http://www.cumthyb.site:3013'
+// const HOST='http://localhost:3013'
 
 var store = {
 	save(key, value) {
@@ -134,7 +135,7 @@ var vm = new Vue({
 		getTasks(filter) {
 			let _this = this
 			Ajax.init({
-				type: "post",  //请求方式 POST or GET(默认)    
+				type: "GET",  //请求方式 POST or GET(默认)    
 				url:`${HOST}/api/task/getTask`,   //请求的地址    
 				async: true,  //是否异步，默认true    
 				timeout: 5000,  //超时处理，默认10000    

@@ -2,7 +2,7 @@
  * @Author: hongyongbo
  * @Date: 2019-01-17 10:27:14
  * @LastEditors: hongyongbo
- * @LastEditTime: 2019-01-17 17:43:47
+ * @LastEditTime: 2019-05-16 13:48:26
  * @Description: 路由注册,接口分发
  * @Notice: 
  */
@@ -22,7 +22,7 @@ function createRouter(db) {
   router.post("/task/finish", task.finishTask);
   router.post("/task/unFinish", task.unFinishTask);
   router.post("/task/modifyContent", task.updateTaskContent);
-  router.post("/task/getTask", task.getTask);
+  router.get("/task/getTask", task.getTask);
   
   return router;
 }
